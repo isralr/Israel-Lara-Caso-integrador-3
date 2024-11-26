@@ -42,3 +42,26 @@ A continuación se muestra cómo se podría reescribir el código para CLion:
 Este código debería compilar y funcionar en CLion sin necesidad de agregar la directiva _CRT_SECURE_NO_WARNINGS, ya que no se están utilizando las versiones seguras específicas de Microsoft de las funciones de la biblioteca estándar de C.
 
 Por último, ten en cuenta que este código no realiza una comprobación completa de errores y no es robusto contra varios tipos de errores de entrada. Dependiendo de tu caso de uso específico, es posible que desees agregar comprobaciones de errores adicionales y manejar los fallos de manera más sofisticada.
+
+# Corrección compañero: Caso_final_integrador_3
+## Juan Díaz
+1. Archivo helper.cpp
+<details>
+Errores detectados:
+using namespace std; no es necesario.
+Es mejor evitar el uso de using namespace std; para mantener la claridad y evitar conflictos de nombres.
+El buffer no se limpia correctamente.
+Cuando lees datos con fread, si no se llena todo el buffer, los datos anteriores pueden persistir, causando errores al concatenar.
+Manejo incorrecto de excepciones.
+En algunos entornos, lanzar excepciones desde funciones estándar como fopen o fread puede ser problemático si no se maneja adecuadamente.
+Falta de validación de la longitud del nombre del archivo.
+Si el usuario introduce una cadena más larga que el límite del buffer, puede ocurrir un desbordamiento.
+</details>
+2. Archivo main.cpp
+<details>
+Errores detectados:
+Mensajes de salida no formateados.
+El programa debería incluir más instrucciones claras para el usuario.
+Manejo de errores redundante.
+Ya se manejan excepciones en load_script. Repetirlas aquí es innecesario.
+</details>
