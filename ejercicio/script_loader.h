@@ -10,11 +10,11 @@ struct ConsoleBox {
 };
 
 // Consola global para el programa
-extern ConsoleBox* consoleBox;
+extern ConsoleBox consoleBox;
 
 // Prototipos de funciones
 void load_script(const char* filename, bool show_script = false);
 void load_script();
 void ejecutar_opcion(int opcion);
 
-#endif
+#endif // SCRIPT_LOADER_H

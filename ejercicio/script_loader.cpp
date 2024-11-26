@@ -3,10 +3,10 @@
 #include <string>
 #include <cstdio>
 #include <stdexcept>
-#include "script_loader.h"
+#include <limits>
 
 // Definición de la consola simulada
-ConsoleBox* consoleBox = new ConsoleBox;
+ConsoleBox consoleBox;
 
 void ConsoleBox::new_text() {
     std::cout << "Consola: Nuevo texto cargado.\n";
@@ -24,6 +24,7 @@ void load_script(const char* filename, bool show_script) {
         // Abre el archivo en modo binario para lectura
         file = fopen(filename, "rb");
         if (!file) {
+            std::perror("Error al abrir el archivo");
             throw std::runtime_error("No se pudo abrir el archivo. Verifica el nombre o permisos.");
         }
 
@@ -46,8 +47,8 @@ void load_script(const char* filename, bool show_script) {
             std::cout << script << "\033[0m" << std::endl;
         }
 
-        consoleBox->new_text();
-        consoleBox->set_text(script);
+        consoleBox.new_text();
+        consoleBox.set_text(script);
     } catch (const std::runtime_error& e) {
         std::cerr << "Error: " << e.what() << std::endl;
         if (file) fclose(file);
@@ -60,7 +61,7 @@ void load_script(const char* filename, bool show_script) {
 void load_script() {
     char filename[500];
     std::cout << "Introduce el nombre del archivo: ";
-    std::cin.ignore(); // Limpia el buffer
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Limpia el buffer
     std::cin.getline(filename, sizeof(filename));
     load_script(filename, true);
 }
